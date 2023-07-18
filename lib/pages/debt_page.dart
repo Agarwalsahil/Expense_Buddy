@@ -1,47 +1,45 @@
+import 'package:expense_buddy/data/debt_data.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../components/expense_summary.dart';
 import '../components/expense_tile.dart';
-import '../data/expense_data.dart';
-import '../models/expense_item.dart';
+import '../models/debt_item.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class DebtPage extends StatefulWidget {
+  const DebtPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<DebtPage> createState() => _DebtPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  TextEditingController newExpenseNameController = TextEditingController();
-  TextEditingController newExpenseDollarController = TextEditingController();
-  TextEditingController newExpenseCentsController = TextEditingController();
+class _DebtPageState extends State<DebtPage> {
+  TextEditingController newPersonNameController = TextEditingController();
+  TextEditingController newDebtDollarController = TextEditingController();
+  TextEditingController newDebtCentsController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
 
     //prepare the data when app start for first time
-    Provider.of<ExpenseData>(context, listen: false).prepareData();
-    // Provider.of<DebtData>(context, listen: false).prepareDataforDebt();
+    Provider.of<DebtData>(context, listen: false).prepareDataforDebt();
   }
 
-  void addNewExpense() {
+  void addNewDebt() {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Add a new expense'),
+          title: const Text('Add a new debt'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
-                controller: newExpenseNameController,
+                controller: newPersonNameController,
                 cursorWidth: 2,
                 decoration: const InputDecoration(
-                  hintText: 'Expense Name',
+                  hintText: 'Person Name',
                 ),
               ),
               Row(
@@ -49,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     child: TextField(
                       keyboardType: TextInputType.number,
-                      controller: newExpenseDollarController,
+                      controller: newDebtDollarController,
                       decoration: const InputDecoration(hintText: 'Dollar'),
                     ),
                   ),
@@ -59,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     child: TextField(
                       keyboardType: TextInputType.number,
-                      controller: newExpenseCentsController,
+                      controller: newDebtCentsController,
                       decoration: const InputDecoration(hintText: 'Cents'),
                     ),
                   )
@@ -82,25 +80,24 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void deleteExpense(ExpenseItem expense) {
-    Provider.of<ExpenseData>(context, listen: false).deleteExpense(expense);
+  void deleteDebt(DebtItem debt) {
+    Provider.of<DebtData>(context, listen: false).deleteDebt(debt);
   }
 
   void save() {
-    if (newExpenseNameController.text.isNotEmpty &&
-        newExpenseDollarController.text.isNotEmpty) {
+    if (newPersonNameController.text.isNotEmpty &&
+        newDebtDollarController.text.isNotEmpty) {
       String amount =
-          '${newExpenseDollarController.text == '' ? '00' : newExpenseDollarController.text}.${newExpenseCentsController.text == '' ? '00' : newExpenseCentsController.text == '0' ? '00' : newExpenseCentsController.text}';
-      ExpenseItem newExpense = ExpenseItem(
-        newExpenseNameController.text,
+          '${newDebtDollarController.text == '' ? '00' : newDebtDollarController.text}.${newDebtCentsController.text == '' ? '00' : newDebtCentsController.text == '0' ? '00' : newDebtCentsController.text}';
+      DebtItem newDebt = DebtItem(
+        newPersonNameController.text,
         amount,
         DateTime.now(),
       );
-      // if (newExpenseCentsController.text == '') {
+      // if (newDebtCentsController.text == '') {
       //   amount = '${amount}00';
       // }
-      Provider.of<ExpenseData>(context, listen: false)
-          .addNewExpense(newExpense);
+      Provider.of<DebtData>(context, listen: false).addNewDebt(newDebt);
     }
 
     Navigator.pop(context);
@@ -113,14 +110,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   void clear() {
-    newExpenseNameController.clear();
-    newExpenseDollarController.clear();
-    newExpenseCentsController.clear();
+    newPersonNameController.clear();
+    newDebtDollarController.clear();
+    newDebtCentsController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ExpenseData>(
+    return Consumer<DebtData>(
       builder: (context, value, child) => Scaffold(
         backgroundColor: Colors.teal.shade400,
         appBar: AppBar(
@@ -129,7 +126,7 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.only(right: 10.0),
               child: IconButton(
                 onPressed: () {
-                  addNewExpense();
+                  addNewDebt();
                 },
                 icon: const Icon(
                   Icons.add,
@@ -140,10 +137,9 @@ class _HomePageState extends State<HomePage> {
             )
           ],
           elevation: 0,
-          automaticallyImplyLeading: false,
           backgroundColor: Colors.teal.shade600,
           title: Text(
-            'Track Your Expenses',
+            'Account of Debts',
             style: GoogleFonts.pangolin(
               textStyle: const TextStyle(
                 fontSize: 23,
@@ -156,7 +152,7 @@ class _HomePageState extends State<HomePage> {
         body: ListView(
           children: [
             //Weekly Summary
-            ExpenseSummary(startOfWeek: value.startOfWeekDate()!),
+            // ExpenseSummary(startOfWeek: value.startOfWeekDate()!),
             const SizedBox(
               height: 30,
             ),
@@ -166,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Expense Details',
+                    'Person Name',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
@@ -179,20 +175,21 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 5,
             ),
+
             //expense List
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: value.getAllExpenseList().length,
+              itemCount: value.getAllDebtList().length,
               itemBuilder: (context, index) {
                 return Column(
                   children: [
                     CommonTile(
-                      name: value.getAllExpenseList()[index].name,
-                      amount: value.getAllExpenseList()[index].amount,
-                      dateTime: value.getAllExpenseList()[index].dateTime,
-                      deleteTapped: (p0) => deleteExpense(
-                        value.getAllExpenseList()[index],
+                      name: value.getAllDebtList()[index].personName,
+                      amount: value.getAllDebtList()[index].debtAmount,
+                      dateTime: value.getAllDebtList()[index].dateTime,
+                      deleteTapped: (p0) => deleteDebt(
+                        value.getAllDebtList()[index],
                       ),
                     ),
                     Divider(

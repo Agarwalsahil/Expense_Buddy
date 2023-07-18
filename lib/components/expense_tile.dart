@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 // ignore: must_be_immutable
-class ExpenseTile extends StatelessWidget {
+class CommonTile extends StatelessWidget {
   final String name;
   final String amount;
   final DateTime dateTime;
   void Function(BuildContext)? deleteTapped;
 
-  ExpenseTile({
+  CommonTile({
     super.key,
     required this.name,
     required this.amount,
