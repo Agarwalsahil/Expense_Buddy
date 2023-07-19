@@ -1,5 +1,5 @@
-# Get Up
-> An alarm application created with Flutter.
+# Expense Buddy
+> An application created with Flutter.
 <!-- > Download [_here_](https://drive.google.com/file/d/1GtTEIsvv7oZUWf2ZyD7vJR9mp8CBj6nw/view?usp=sharing). If you have the project hosted somewhere, include the link here. -->
 
 ## Table of Contents
@@ -29,7 +29,7 @@
 List the ready features here:
 - You can add new expense and delete the existing expense. 
 - You can add new debt of a person and also delete the same when repaid.
-- There is a bar graph for showing expense for seven days of a week.
+- There is a bar graph which shows expense statistics over seven days of a week.
 
 
 ## Screenshots
