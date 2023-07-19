@@ -8,9 +8,9 @@
 * [Features](#features)
 * [Screenshots](#screenshots)
 * [Setup](#setup)
+* [Contact](#contact)
 <!-- * [Usage](#usage) -->
 <!-- * [Project Status](#project-status) -->
-* [Contact](#contact)
 <!-- * [License](#license) -->
 
 
