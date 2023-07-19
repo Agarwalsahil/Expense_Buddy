@@ -33,7 +33,7 @@ class DebtData extends ChangeNotifier {
     db.saveDataForDebt(overallDebtList);
   }
 
-  //get weekday {mon,tues, etc} from a dateTime object
+  // get weekday {mon,tues, etc} from a dateTime object
   // String getWeekDayName(DateTime dateTime) {
   //   switch (dateTime.weekday) {
   //     case 1:

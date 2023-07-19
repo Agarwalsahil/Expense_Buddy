@@ -139,7 +139,7 @@ class _DebtPageState extends State<DebtPage> {
           elevation: 0,
           backgroundColor: Colors.teal.shade600,
           title: Text(
-            'Account of Debts',
+            'Track Lent Money',
             style: GoogleFonts.pangolin(
               textStyle: const TextStyle(
                 fontSize: 23,
@@ -152,9 +152,10 @@ class _DebtPageState extends State<DebtPage> {
         body: ListView(
           children: [
             //Weekly Summary
+            // DebtSummary(startOfWeek: value.startOfWeekDate()!),
             // ExpenseSummary(startOfWeek: value.startOfWeekDate()!),
             const SizedBox(
-              height: 30,
+              height: 25,
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0),

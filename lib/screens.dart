@@ -41,7 +41,7 @@ class _ScreensState extends State<Screens> {
               ),
               GButton(
                 icon: Icons.people,
-                text: 'People Debt',
+                text: 'Money Lent',
                 iconSize: 33,
               ),
             ],
